@@ -1,0 +1,98 @@
+[project]
+name = "fastapi-openshift-project"
+version = "0.1.0"
+description = "FastAPI project for OpenShift"
+readme = "README.md"
+authors = [
+    {name = "ak0025", email = "vyomkesh.iitb@gmail.com"}
+]
+
+requires-python = ">=3.10"
+dependencies = [
+    "bareutils",
+    "fastapi == 0.116.2",
+    "jetblack-asgi-typing",
+    "jsoncomment",
+    "jsonschema[format]",
+    "prometheus-client",
+    "requests",
+    "types-jsonschema",
+    "types-requests",
+    "websockets == 15.0.1",
+    "uvicorn[standard]",
+    "datamodel-code-generator == 0.33.0"
+]
+
+[project.optional-dependencies]
+production = [
+    # requests-requests_kerberos
+]
+dev = [
+    "pytest",
+    "httpx",
+    "mypy",
+    "librt == 0.7.7",
+    "pip-tools",
+    "pytest-watcher",
+    "ruff == 0.14.1",
+    "pip-review",
+    "datamodel-code-generator == 0.33.0",
+    "black"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src", "resources"]
+
+[tool.mypy]
+strict = true
+enable_incomplete_feature = "NewGenericSyntax"
+exclude = [
+    "Lib",
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "requests_kerberos",
+    "jsoncomment",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--tb=short"
+markers = [
+    "libgentest",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.ruff.lint]
+# See https://docs.astral.sh/ruff/linter/#rule-selection
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "UP",     # pyupgrade
+    "B",      # flake8-bugbear
+    "SIM",    # flake8-simplify
+    "I",      # isort
+    "PL",     # pylint
+]
+ignore = [
+    "E501",   # max-line-length, formatter will take care of it
+]
+
+[tool.ruff.lint.isort]
+no-lines-before = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder"
+]
+
