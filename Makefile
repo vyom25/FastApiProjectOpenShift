@@ -57,6 +57,10 @@ test: $(VENV_BIN) ## run tests
 unit: $(VENV_BIN) ## run unit tests
 	${VENV_BIN}/pytest tests/unit/
 
+.PHONY: run-prod
+run-prod: $(VENV_BIN) ## run app on port 8080 with production settings
+	${VENV_BIN}/uvicorn myapp.webapp:app --port 8080 --workers 2 --host 0.0.0.0
+
 
 
 
